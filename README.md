@@ -1,2 +1,5 @@
-# BlueFaber-Engine
-Blue Faber Engine (BFE)
+# BlueFaber Engine
+
+Проект инструментов для создания, импорта и переноса модов и серверных плагинов Minecraft Java Edition через визуальный редактор.
+
+[Поэтапная карта разработки](docs/ROADMAP.md)
