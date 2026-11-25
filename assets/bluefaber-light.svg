@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+    <defs>
+        <linearGradient id="topFace" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#1e3a8a" />
+            <stop offset="100%" stop-color="hsl(217, 51%, 20%)" />
+        </linearGradient>
+        <linearGradient id="leftFace" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#1e3a8a" />
+            <stop offset="100%" stop-color="hsl(217, 51%, 20%)" />
+        </linearGradient>
+        <linearGradient id="rightFace" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#1e3a8a" />
+            <stop offset="100%" stop-color="hsl(217, 51%, 20%)" />
+        </linearGradient>
+    </defs>
+
+    <polygon points="100,30 160,60 100,90 40,60" fill="url(#topFace)" />
+    <polygon points="40,60 100,90 100,150 40,120" fill="url(#leftFace)" />
+    <polygon points="160,60 100,90 100,150 160,120" fill="url(#rightFace)" />
+
+    <line x1="130" y1="45" x2="70" y2="75" stroke="#3b82f6" stroke-width="2" opacity="0.8"/>
+    <line x1="70" y1="45" x2="130" y2="75" stroke="#3b82f6" stroke-width="2" opacity="0.8"/>
+    <!-- <line x1="100" y1="30" x2="100" y2="90" stroke="#1e3a8a" stroke-width="2" opacity="0.8"/> -->
+    <circle cx="100" cy="60" r="3" fill="#333333" />
+    <circle cx="70" cy="45" r="3" fill="#333333" />
+    <circle cx="130" cy="45" r="3" fill="#333333" />
+    <!-- <circle cx="100" cy="90" r="3" fill="#333333" /> -->
+    <!-- <circle cx="100" cy="30" r="3" fill="#333333" /> -->
+
+    <line x1="70" y1="75" x2="70" y2="135" stroke="#3b82f6" stroke-width="2" opacity="0.7"/>
+    <circle cx="70" cy="75" r="3" fill="#333333" />
+    <circle cx="70" cy="135" r="3" fill="#333333" />
+
+    <line x1="130" y1="75" x2="130" y2="135" stroke="#3b82f6" stroke-width="2" opacity="0.7"/>
+    <circle cx="130" cy="75" r="3" fill="#333333" />
+    <circle cx="130" cy="135" r="3" fill="#333333" />
+
+    <text x="100" y="175" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="18" font-weight="bold" fill="#1e3a8a" text-anchor="middle" letter-spacing="1">BlueFaber</text>
+    <text x="100" y="192" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="normal" fill="#333333" text-anchor="middle" letter-spacing="2">ENGINE</text>
+</svg>
