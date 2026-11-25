@@ -4,8 +4,8 @@
 
 <h1 align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="../../assets/bluefaber-dark.svg">
-    <img src="../../assets/bluefaber-light.svg" alt="BlueFaber Engine" width="150" height="150">
+    <source media="(prefers-reduced-motion: reduce)" srcset="../../assets/readme-hero-still.png">
+    <img src="../../assets/readme-hero.svg" alt="BlueFaber Engine" width="800">
   </picture>
 </h1>
 

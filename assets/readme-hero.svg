@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="224" viewBox="0 0 800 224" role="img" aria-labelledby="title desc">
+  <title id="title">BlueFaber Engine</title>
+  <desc id="desc">A blue isometric cube connects to a network of nodes. Light travels along the connections.</desc>
+  <defs>
+    <linearGradient id="canvas" x2="1" y2="0.6" gradientUnits="objectBoundingBox">
+      <stop stop-color="#10172c"/>
+      <stop offset=".48" stop-color="#101c36"/>
+      <stop offset="1" stop-color="#101a31"/>
+    </linearGradient>
+    <radialGradient id="atmosphere">
+      <stop stop-color="#23569c" stop-opacity=".57"/>
+      <stop offset="1" stop-color="#23569c" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="grid-fade">
+      <stop offset=".24" stop-color="black"/>
+      <stop offset=".63" stop-color="white"/>
+    </linearGradient>
+    <mask id="grid-mask"><rect width="800" height="224" fill="url(#grid-fade)"/></mask>
+    <pattern id="grid" width="18" height="18" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r=".85" fill="#87afdc" opacity=".37"/>
+    </pattern>
+    <linearGradient id="top" x2=".85" y2="1">
+      <stop stop-color="#60a9ff"/>
+      <stop offset="1" stop-color="#3a63df"/>
+    </linearGradient>
+    <linearGradient id="left" x2=".94" y2="1">
+      <stop stop-color="#356ed3"/>
+      <stop offset="1" stop-color="#193f95"/>
+    </linearGradient>
+    <linearGradient id="right" x2="1" y2="1">
+      <stop stop-color="#294eaa"/>
+      <stop offset="1" stop-color="#172c72"/>
+    </linearGradient>
+    <linearGradient id="housing" x2=".65" y2="1">
+      <stop stop-color="#233e63"/>
+      <stop offset="1" stop-color="#13213b"/>
+    </linearGradient>
+    <clipPath id="frame"><rect width="800" height="224" rx="14"/></clipPath>
+    <path id="input" d="M448 66 C478 66 482 47 502 49 S520 77 533 77" pathLength="100"/>
+    <path id="branch" d="M469 169 C502 169 495 137 533 137" pathLength="100"/>
+    <path id="output" d="M653 77 C681 77 676 54 707 54" pathLength="100"/>
+    <path id="return" d="M653 137 C680 137 678 165 714 165" pathLength="100"/>
+    <style>
+      .signal { opacity: 0; }
+      @media (prefers-reduced-motion: no-preference) {
+        .signal {
+          animation: transmit 6s linear infinite;
+          stroke-dasharray: 10 100;
+          stroke-dashoffset: 10;
+        }
+        .s2 { animation-delay: -2.8s; }
+        .s3 { animation-delay: -3.9s; }
+        .s4 { animation-delay: -1.2s; }
+        @keyframes transmit {
+          0%, 6% { opacity: 0; stroke-dashoffset: 10; }
+          16% { opacity: .95; }
+          54% { opacity: .95; }
+          64%, 100% { opacity: 0; stroke-dashoffset: -100; }
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .signal { animation: none; opacity: 0; }
+      }
+    </style>
+  </defs>
+
+  <g clip-path="url(#frame)">
+    <rect width="800" height="224" fill="url(#canvas)"/>
+    <ellipse cx="597" cy="103" rx="237" ry="168" fill="url(#atmosphere)"/>
+    <rect width="800" height="224" fill="url(#grid)" mask="url(#grid-mask)"/>
+    <g fill="none" stroke="#799ac5" opacity=".28" stroke-width="1">
+      <path d="M387 32h8m-4-4v8m362 153h8m-4-4v8M515 191h6m-3-3v6"/>
+    </g>
+
+    <text x="42" y="122" fill="#f0f5ff" font-family="Segoe UI, Helvetica, Arial, sans-serif"
+          font-size="68" font-weight="700" letter-spacing="-3.6">BlueFaber</text>
+    <path d="M47 149h22" fill="none" stroke="#6ae3e9" stroke-width="3" stroke-linecap="round"/>
+    <text x="82" y="155" fill="#a9c5ee" font-family="Segoe UI, Helvetica, Arial, sans-serif"
+          font-size="18" font-weight="600" letter-spacing="7">ENGINE</text>
+
+    <g fill="none" stroke="#73b6dd" stroke-width="1.75" stroke-linecap="round">
+      <use href="#input"/>
+      <use href="#output"/>
+      <use href="#branch" stroke="#7a85cf"/>
+      <use href="#return" stroke="#7a85cf"/>
+    </g>
+    <g fill="none" stroke="#c7faff" stroke-width="3" stroke-linecap="round" opacity="1">
+      <use class="signal" href="#input" opacity="0"/>
+      <use class="signal s2" href="#branch" opacity="0" stroke="#d8d6ff"/>
+      <use class="signal s3" href="#output" opacity="0"/>
+      <use class="signal s4" href="#return" opacity="0" stroke="#d8d6ff"/>
+    </g>
+
+    <g transform="translate(493 17)">
+      <path d="m40 140 60 30 60-30-60-30z" fill="none" stroke="#6e95d6" stroke-opacity=".32" stroke-dasharray="2 4"/>
+      <path d="m46 133 54 27 54-27-54-27z" fill="#081224" opacity=".55"/>
+      <g stroke-linejoin="round" stroke-width="1.3">
+        <path d="m40 60 60-30 60 30-60 30z" fill="url(#top)" stroke="#99caff"/>
+        <path d="m40 60 60 30v60l-60-30z" fill="url(#left)" stroke="#6098f1"/>
+        <path d="m100 90 60-30v60l-60 30z" fill="url(#right)" stroke="#6488df"/>
+      </g>
+      <g fill="none" stroke="#b3e1ff" stroke-width="1.65">
+        <path d="m70 45 60 30v60M130 45 70 75v60"/>
+      </g>
+      <g fill="#e6faff" stroke="#426fca" stroke-width="1">
+        <circle cx="70" cy="45" r="2.8"/><circle cx="130" cy="45" r="2.8"/>
+        <circle cx="100" cy="60" r="3.6"/>
+        <circle cx="70" cy="75" r="2.8"/><circle cx="130" cy="75" r="2.8"/>
+        <circle cx="70" cy="135" r="2.8"/><circle cx="130" cy="135" r="2.8"/>
+      </g>
+    </g>
+
+    <g fill="url(#housing)" stroke-width="1.25">
+      <rect x="398" y="50" width="50" height="32" rx="8" stroke="#5f8dae"/>
+      <rect x="419" y="153" width="50" height="32" rx="8" stroke="#716eac"/>
+      <rect x="707" y="38" width="48" height="32" rx="8" stroke="#5f8dae"/>
+      <rect x="714" y="149" width="48" height="32" rx="8" stroke="#716eac"/>
+    </g>
+    <g fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M411 67h5l4-7 5 12 4-7h6" stroke="#96e3ea"/>
+      <path d="M432 170h6l5-6h8m-13 6 5 5h8" stroke="#b5b6f7"/>
+      <path d="m722 53 4-4 4 4-4 4zm8 0h8" stroke="#96e3ea"/>
+      <path d="M728 163h16m-16 5h10" stroke="#b5b6f7"/>
+    </g>
+    <g fill="#c9fbff" stroke="#285274" stroke-width="1.8">
+      <circle cx="448" cy="66" r="3.2"/><circle cx="533" cy="77" r="3.2"/>
+      <circle cx="653" cy="77" r="3.2"/><circle cx="707" cy="54" r="3.2"/>
+    </g>
+    <g fill="#e0deff" stroke="#474a80" stroke-width="1.8">
+      <circle cx="469" cy="169" r="3.2"/><circle cx="533" cy="137" r="3.2"/>
+      <circle cx="653" cy="137" r="3.2"/><circle cx="714" cy="165" r="3.2"/>
+    </g>
+    <rect x=".5" y=".5" width="799" height="223" rx="13.5" fill="none" stroke="#52668a" stroke-opacity=".55"/>
+  </g>
+</svg>
