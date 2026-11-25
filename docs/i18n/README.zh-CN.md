@@ -11,8 +11,6 @@
 
 <p align="center"><strong>面向 Minecraft Java 版模组与服务端插件的可视化节点编辑器</strong></p>
 
-<p align="center"><code>玩家首次加入</code> → <code>发放新手礼包</code></p>
-
 BlueFaber Engine 正在开发中。项目的目标是让你从空白节点图开始创作，也可以导入现有的 JAR 文件，再通过节点编辑逻辑，为支持的游戏版本和平台重新构建项目。
 
 <p align="center">Forge · NeoForge · Fabric &nbsp; / &nbsp; Bukkit · Spigot · Paper</p>

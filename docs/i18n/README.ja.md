@@ -11,8 +11,6 @@
 
 <p align="center"><strong>Minecraft Java Edition の MOD とサーバープラグインのためのビジュアルノードエディター</strong></p>
 
-<p align="center"><code>プレイヤーの初参加時</code> → <code>初期アイテムを配布</code></p>
-
 BlueFaber Engine は現在開発中です。空のグラフから作成したり、既存の JAR ファイルを読み込んだりして、ノードでロジックを編集し、対応するゲームバージョンとプラットフォーム向けに再ビルドできるようにすることを目指しています。
 
 <p align="center">Forge · NeoForge · Fabric &nbsp; / &nbsp; Bukkit · Spigot · Paper</p>

@@ -11,8 +11,6 @@
 
 <p align="center"><strong>Визуальный редактор узлов для модов и серверных плагинов Minecraft Java Edition</strong></p>
 
-<p align="center"><code>Игрок впервые зашёл на сервер</code> → <code>Выдать стартовый набор</code></p>
-
 BlueFaber Engine ещё в разработке. В редакторе можно будет создать граф с нуля или импортировать готовый JAR, изменить логику с помощью узлов и собрать проект для одной из поддерживаемых версий игры на выбранной платформе.
 
 <p align="center">Forge · NeoForge · Fabric &nbsp; / &nbsp; Bukkit · Spigot · Paper</p>

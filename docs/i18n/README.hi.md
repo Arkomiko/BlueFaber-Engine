@@ -11,8 +11,6 @@
 
 <p align="center"><strong>Minecraft Java Edition के मॉड और सर्वर प्लगइन के लिए एक विज़ुअल नोड एडिटर</strong></p>
 
-<p align="center"><code>पहली बार जुड़ने पर</code> → <code>शुरुआती किट दें</code></p>
-
 BlueFaber Engine अभी विकास में है। लक्ष्य है कि आप खाली ग्राफ़ या मौजूदा JAR फ़ाइल से शुरुआत कर सकें, नोड के ज़रिए लॉजिक बदल सकें और किसी समर्थित गेम संस्करण और प्लेटफ़ॉर्म के लिए प्रोजेक्ट दोबारा बिल्ड कर सकें।
 
 <p align="center">Forge · NeoForge · Fabric &nbsp; / &nbsp; Bukkit · Spigot · Paper</p>
