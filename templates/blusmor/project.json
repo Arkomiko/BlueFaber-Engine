@@ -1,0 +1,184 @@
+{
+  "schema": 1,
+  "namespace": "blusmor",
+  "name": "Blusmor",
+  "nodes": [
+    {
+      "kind": "block",
+      "id": "blusmor_ore",
+      "properties": {
+        "en_us": "Blusmor Ore",
+        "ru_ru": "Блусморовая руда",
+        "hardness": 3,
+        "requiresTool": true,
+        "drop": "blusmor:raw_blusmor"
+      }
+    },
+    {
+      "kind": "block",
+      "id": "deepslate_blusmor_ore",
+      "properties": {
+        "en_us": "Deepslate Blusmor Ore",
+        "ru_ru": "Глубинная Блусморовая руда",
+        "hardness": 5,
+        "requiresTool": true,
+        "drop": "blusmor:raw_blusmor"
+      }
+    },
+    {
+      "kind": "item",
+      "id": "raw_blusmor",
+      "properties": {
+        "en_us": "Raw Blusmor",
+        "ru_ru": "Необработанный Блусмор"
+      }
+    },
+    {
+      "kind": "block",
+      "id": "raw_blusmor_block",
+      "properties": {
+        "en_us": "Block of Raw Blusmor",
+        "ru_ru": "Блок необработанного Блусмора",
+        "hardness": 5,
+        "requiresTool": true,
+        "drop": "blusmor:raw_blusmor_block"
+      }
+    },
+    {
+      "kind": "item",
+      "id": "blusmor_ingot",
+      "properties": {
+        "en_us": "Blusmor Ingot",
+        "ru_ru": "Блусморовый слиток"
+      }
+    },
+    {
+      "kind": "block",
+      "id": "blusmor_block",
+      "properties": {
+        "en_us": "Block of Blusmor",
+        "ru_ru": "Блусморовый блок",
+        "hardness": 5,
+        "requiresTool": true,
+        "drop": "blusmor:blusmor_block"
+      }
+    },
+    {
+      "kind": "recipe",
+      "id": "compact_raw_blusmor",
+      "properties": {
+        "method": "compact",
+        "ingredient": "blusmor:raw_blusmor",
+        "result": "blusmor:raw_blusmor_block",
+        "count": 1
+      }
+    },
+    {
+      "kind": "recipe",
+      "id": "unpack_raw_blusmor",
+      "properties": {
+        "method": "unpack",
+        "ingredient": "blusmor:raw_blusmor_block",
+        "result": "blusmor:raw_blusmor",
+        "count": 9
+      }
+    },
+    {
+      "kind": "recipe",
+      "id": "compact_blusmor_ingot",
+      "properties": {
+        "method": "compact",
+        "ingredient": "blusmor:blusmor_ingot",
+        "result": "blusmor:blusmor_block",
+        "count": 1
+      }
+    },
+    {
+      "kind": "recipe",
+      "id": "unpack_blusmor_ingot",
+      "properties": {
+        "method": "unpack",
+        "ingredient": "blusmor:blusmor_block",
+        "result": "blusmor:blusmor_ingot",
+        "count": 9
+      }
+    },
+    {
+      "kind": "recipe",
+      "id": "smelting_blusmor",
+      "properties": {
+        "method": "smelting",
+        "ingredient": "blusmor:raw_blusmor",
+        "result": "blusmor:blusmor_ingot",
+        "count": 1
+      }
+    },
+    {
+      "kind": "recipe",
+      "id": "blasting_blusmor",
+      "properties": {
+        "method": "blasting",
+        "ingredient": "blusmor:raw_blusmor",
+        "result": "blusmor:blusmor_ingot",
+        "count": 1
+      }
+    },
+    {
+      "kind": "block_tag",
+      "id": "pickaxe",
+      "properties": {
+        "tag": "minecraft:mineable/pickaxe",
+        "entries": [
+          "blusmor:blusmor_ore",
+          "blusmor:deepslate_blusmor_ore",
+          "blusmor:raw_blusmor_block",
+          "blusmor:blusmor_block"
+        ]
+      }
+    },
+    {
+      "kind": "block_tag",
+      "id": "stone_tool",
+      "properties": {
+        "tag": "minecraft:needs_stone_tool",
+        "entries": [
+          "blusmor:blusmor_ore",
+          "blusmor:deepslate_blusmor_ore",
+          "blusmor:raw_blusmor_block",
+          "blusmor:blusmor_block"
+        ]
+      }
+    },
+    {
+      "kind": "item_tag",
+      "id": "materials",
+      "properties": {
+        "tag": "blusmor:materials",
+        "entries": [
+          "blusmor:raw_blusmor",
+          "blusmor:blusmor_ingot"
+        ]
+      }
+    },
+    {
+      "kind": "ore",
+      "id": "blusmor_vein",
+      "properties": {
+        "size": 10,
+        "count": 16,
+        "minY": -16,
+        "maxY": 112,
+        "targets": [
+          {
+            "host": "minecraft:stone_ore_replaceables",
+            "block": "blusmor:blusmor_ore"
+          },
+          {
+            "host": "minecraft:deepslate_ore_replaceables",
+            "block": "blusmor:deepslate_blusmor_ore"
+          }
+        ]
+      }
+    }
+  ]
+}

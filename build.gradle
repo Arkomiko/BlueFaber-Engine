@@ -1,0 +1,39 @@
+plugins {
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.11.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.11.4'
+}
+
+application {
+    mainClass = 'bluefaber.content.Main'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+// Bundle the same pinned wrapper into each exported project so it can build independently.
+def exportWrapper = tasks.register('exportWrapper', Sync) {
+    from('gradle/wrapper') { into 'gradle/wrapper' }
+    from 'gradlew', 'gradlew.bat'
+    into layout.buildDirectory.dir('generated/export-wrapper')
+}
+tasks.named('processResources') {
+    from(exportWrapper) { into 'export-wrapper' }
+}
