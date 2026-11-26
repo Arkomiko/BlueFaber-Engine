@@ -11,10 +11,10 @@
 
 <p align="center"><strong>Un editor visual de nodos para mods y plugins de servidor de Minecraft Java Edition</strong></p>
 
-BlueFaber Engine está en desarrollo. Su objetivo principal es portar mods y plugins de servidor de Minecraft Java Edition entre versiones del juego y plataformas. El editor de nodos permitirá abrir un JAR existente o crear un mod a partir de un grafo vacío o una plantilla editable.
+<p align="center">BlueFaber Engine está en desarrollo. Su objetivo principal es portar mods y plugins de servidor de Minecraft Java Edition entre versiones del juego y plataformas. El editor de nodos permitirá abrir un JAR existente o crear un mod a partir de un grafo vacío o una plantilla editable.</p>
 
 <p align="center">Forge · NeoForge · Fabric &nbsp; / &nbsp; Bukkit · Spigot · Paper</p>
 
 <p align="center">
-  <a href="../../docs/ROADMAP.md">Hoja de ruta (en ruso)</a> · <a href="https://github.com/users/Arkomiko/projects/6/views/6">Tablero del proyecto</a>
+  <a href="../../docs/ROADMAP.md">Hoja de ruta (en ruso)</a> · <a href="https://github.com/users/Arkomiko/projects/6/views/6">Tablero del proyecto</a> · <a href="../LICENSE.md#español">Licencia</a>
 </p>

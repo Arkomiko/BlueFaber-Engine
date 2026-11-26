@@ -11,10 +11,10 @@
 
 <p align="center"><strong>Визуальный редактор узлов для модов и серверных плагинов Minecraft Java Edition</strong></p>
 
-BlueFaber Engine в разработке. Главная цель — переносить моды и серверные плагины Minecraft Java Edition между версиями игры и платформами. В редакторе узлов можно будет открыть существующий JAR или начать свой мод с пустого графа либо редактируемого шаблона.
+<p align="center">BlueFaber Engine в разработке. Главная цель — переносить моды и серверные плагины Minecraft Java Edition между версиями игры и платформами. В редакторе узлов можно будет открыть существующий JAR или начать свой мод с пустого графа либо редактируемого шаблона.</p>
 
 <p align="center">Forge · NeoForge · Fabric &nbsp; / &nbsp; Bukkit · Spigot · Paper</p>
 
 <p align="center">
-  <a href="../ROADMAP.md">Дорожная карта</a> · <a href="https://github.com/users/Arkomiko/projects/6/views/6">Доска задач</a>
+  <a href="../ROADMAP.md">Дорожная карта</a> · <a href="https://github.com/users/Arkomiko/projects/6/views/6">Доска задач</a> · <a href="../LICENSE.md#русский">Лицензия</a>
 </p>

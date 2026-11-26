@@ -1,4 +1,20 @@
+<picture>
+  <source media="(prefers-reduced-motion: reduce)" srcset="../assets/docs-flow-still.svg">
+  <img src="../assets/docs-flow.svg" width="800" height="104" alt="">
+</picture>
+
 # Бэклог BlueFaber Engine
+
+[Главная](../README.md) · [Карта разработки](ROADMAP.md) · [Очередь первого переноса](PORTING-FIRST.md) · [Шаблоны](TEMPLATES.md)
+
+<details>
+<summary>На этой странице</summary>
+
+- [Очередь для одного разработчика](#очередь-для-одного-разработчика)
+- [Исправленные несостыковки](#исправленные-несостыковки)
+- [Рабочие материалы](#рабочие-материалы)
+
+</details>
 
 [Доска этапов P00–P12](https://github.com/users/Arkomiko/projects/6/views/6) · [Этапная карта](ROADMAP.md) · [Первый перенос](PORTING-FIRST.md)
 

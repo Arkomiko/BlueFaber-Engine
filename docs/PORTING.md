@@ -1,4 +1,21 @@
+<picture>
+  <source media="(prefers-reduced-motion: reduce)" srcset="../assets/docs-flow-still.svg">
+  <img src="../assets/docs-flow.svg" width="800" height="104" alt="">
+</picture>
+
 # Перенос между версиями и платформами Minecraft
+
+[Главная](../README.md) · [Карта разработки](ROADMAP.md) · [Первый перенос](PORTING-FIRST.md) · [Восстановление Java](JAVA-RECOVERY.md)
+
+<details>
+<summary>На этой странице</summary>
+
+- [Матрица целей](#матрица-целей)
+- [Правила переноса](#правила-переноса)
+- [Mixin и трансформации классов](#mixin-и-трансформации-классов)
+- [Доказательство поддержки](#доказательство-поддержки)
+
+</details>
 
 К [карте разработки](ROADMAP.md) · [Архитектура](ARCHITECTURE.md) · [Восстановление Java](JAVA-RECOVERY.md) · [Обзор открытых проектов](RESEARCH.md)
 

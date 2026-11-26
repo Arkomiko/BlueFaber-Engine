@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="104" viewBox="0 0 800 104" role="img" aria-labelledby="title desc">
+  <title id="title">BlueFaber Engine documentation</title>
+  <desc id="desc">A blue isometric cube branches into a network of connected nodes.</desc>
+  <defs>
+    <linearGradient id="canvas">
+      <stop stop-color="#10172c"/>
+      <stop offset="1" stop-color="#14294a"/>
+    </linearGradient>
+    <linearGradient id="wire">
+      <stop stop-color="#477bb5"/>
+      <stop offset="1" stop-color="#6ae3e9"/>
+    </linearGradient>
+    <pattern id="grid" width="18" height="18" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r=".9" fill="#87afdc" opacity=".21"/>
+    </pattern>
+    <clipPath id="frame"><rect width="800" height="104" rx="12"/></clipPath>
+    <path id="route" d="M390 52H450 C480 52 480 27 510 27 H565 C592 27 591 52 620 52 H749" pathLength="100"/>
+    <path id="branch" d="M450 52 C480 52 480 77 510 77 H565 C592 77 591 52 620 52" pathLength="100"/>
+  </defs>
+  <g clip-path="url(#frame)">
+    <rect width="800" height="104" fill="url(#canvas)"/>
+    <rect x="334" width="466" height="104" fill="url(#grid)"/>
+    <g transform="translate(28 23)">
+      <path d="M30 4 60 19 30 34 0 19Z" fill="#538dec" stroke="#95c6ff"/>
+      <path d="M0 19 30 34V57L0 42Z" fill="#295bb3" stroke="#6599f2"/>
+      <path d="M30 34 60 19V42L30 57Z" fill="#1d397f" stroke="#6b8bdc"/>
+      <path d="m15 11.5 30 15v23 M45 11.5 15 26.5v23" fill="none" stroke="#add9ff" opacity=".75"/>
+      <circle cx="30" cy="19" r="2" fill="#d6f3ff"/>
+    </g>
+    <text x="113" y="53" fill="#f0f5ff" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="35" font-weight="700" letter-spacing="-1.1">BlueFaber</text>
+    <text x="116" y="76" fill="#a9c5ee" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" letter-spacing="4">ENGINE</text>
+    <g fill="none" stroke="url(#wire)" stroke-width="1.75" stroke-linecap="round">
+      <use href="#route"/>
+      <use href="#branch" opacity=".66"/>
+    </g>
+    <g fill="#1a3658" stroke="#80c7ed" stroke-width="1.1">
+      <rect x="350" y="38" width="40" height="28" rx="5"/>
+      <rect x="521" y="15" width="39" height="24" rx="5"/>
+      <rect x="521" y="65" width="39" height="24" rx="5"/>
+      <rect x="749" y="38" width="27" height="28" rx="5"/>
+    </g>
+    <g fill="none" stroke="#a6deff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m362 53 6-6 5 5 6-6M534 27h13m-6-5 5 5-5 5m-8 45h14m-14 4h9m218-29h6m-3-3v6"/>
+    </g>
+    <g fill="#c5e9ff">
+      <circle cx="390" cy="52" r="2"/>
+      <circle cx="450" cy="52" r="2"/>
+      <circle cx="620" cy="52" r="2"/>
+      <circle cx="749" cy="52" r="2"/>
+    </g>
+  </g>
+  <rect x=".5" y=".5" width="799" height="103" rx="11.5" fill="none" stroke="#82a8d8" stroke-opacity=".35"/>
+</svg>
