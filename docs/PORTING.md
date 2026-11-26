@@ -1,160 +1,17 @@
-<picture>
-  <source media="(prefers-reduced-motion: reduce)" srcset="../assets/docs-flow-still.svg">
-  <img src="../assets/docs-flow.svg" width="800" height="104" alt="">
-</picture>
-
 # Перенос между версиями и платформами Minecraft
 
-[Главная](../README.md) · [Карта разработки](ROADMAP.md) · [Первый перенос](PORTING-FIRST.md) · [Восстановление Java](JAVA-RECOVERY.md)
+Документ переехал в раздел `ru-RU`. [Открыть актуальную страницу](ru-RU/PORTING.md) · [English guide](en-US/PORTING.md)
 
-<details>
-<summary>На этой странице</summary>
-
-- [Матрица целей](#матрица-целей)
-- [Правила переноса](#правила-переноса)
-- [Mixin и трансформации классов](#mixin-и-трансформации-классов)
-- [Доказательство поддержки](#доказательство-поддержки)
-
-</details>
-
-К [карте разработки](ROADMAP.md) · [Архитектура](ARCHITECTURE.md) · [Восстановление Java](JAVA-RECOVERY.md) · [Обзор открытых проектов](RESEARCH.md)
-
-## Матрица целей
-
-Каждая строка описывает направление развития. Поддержка публикуется для конкретного маршрута и набора возможностей после испытания. Для серверного семейства Bukkit — общий API, CraftBukkit — его серверная реализация для испытаний, Spigot и Paper — отдельные цели со своими расширениями. [Spigot BuildTools](https://www.spigotmc.org/wiki/buildtools/), [модель плагинов Paper](https://docs.papermc.io/paper/dev/how-do-plugins-work/).
-
-| Переход | Направление и условия |
-|---|---|
-| Forge → Forge | Старая → новая и новая → старая. Профили Forge для каждой поддерживаемой эпохи |
-| NeoForge → NeoForge | Старая → новая и новая → старая. Только версии, для которых доступна соответствующая сборка NeoForge |
-| Fabric → Fabric | Старая → новая и новая → старая. Fabric Loader, Fabric API и Loom задаются отдельно |
-| Bukkit / Spigot / Paper → Bukkit / Spigot / Paper | Внутри одной платформы и между платформами, на той же версии или со сменой версии в обе стороны. Bukkit-совместимость доказывает прогон на выбранной реализации |
-| Forge ↔ NeoForge | На общей версии Minecraft. Отдельные адаптеры регистрации, событий, сети и трансформаций |
-| Forge ↔ Fabric | На общей версии Minecraft. Например, профили Forge и Fabric 1.21.1 после подтверждения доступности артефактов |
-| NeoForge ↔ Fabric | На общей версии Minecraft. Нативный выход и режим совместимости оцениваются независимо |
-| Forge / NeoForge / Fabric ↔ Bukkit / Spigot / Paper | На общей версии Minecraft. Серверный набор узлов, проверенный для обеих целей. Клиентские и платформенные функции получают явную диагностику |
-| Разные платформы и разные версии одновременно | Поздний этап. Разрешается после прохождения обоих преобразований и отдельного теста именно такой комбинации |
-| Новый граф → мод или плагин | Все цели, для которых есть генератор. Перед сборкой проверяются типы, сторона, поток и наличие адаптера для каждого узла |
-
-### Задачи на каждое направление
-
-Для одной версии Minecraft строка обозначает исходную платформу, столбец — целевую. Здесь перечислены 30 направлений с опорными тестами. Для каждой пары используется существующая общая версия. При заявлении общей поддержки одной демонстрации недостаточно: релизная матрица отдельно фиксирует версию, сторону, выбранную механику и ограничения.
-
-| Исходная цель | Forge | NeoForge | Fabric | Bukkit | Spigot | Paper |
-| --- | --- | --- | --- | --- | --- | --- |
-| Forge | — | [BFE-0699](https://github.com/Arkomiko/BlueFaber-Engine/issues/700) | [BFE-0701](https://github.com/Arkomiko/BlueFaber-Engine/issues/702) | [BFE-0721](https://github.com/Arkomiko/BlueFaber-Engine/issues/722) | [BFE-0722](https://github.com/Arkomiko/BlueFaber-Engine/issues/723) | [BFE-0723](https://github.com/Arkomiko/BlueFaber-Engine/issues/724) |
-| NeoForge | [BFE-0700](https://github.com/Arkomiko/BlueFaber-Engine/issues/701) | — | [BFE-0703](https://github.com/Arkomiko/BlueFaber-Engine/issues/704) | [BFE-0724](https://github.com/Arkomiko/BlueFaber-Engine/issues/725) | [BFE-0725](https://github.com/Arkomiko/BlueFaber-Engine/issues/726) | [BFE-0726](https://github.com/Arkomiko/BlueFaber-Engine/issues/727) |
-| Fabric | [BFE-0702](https://github.com/Arkomiko/BlueFaber-Engine/issues/703) | [BFE-0704](https://github.com/Arkomiko/BlueFaber-Engine/issues/705) | — | [BFE-0727](https://github.com/Arkomiko/BlueFaber-Engine/issues/728) | [BFE-0728](https://github.com/Arkomiko/BlueFaber-Engine/issues/729) | [BFE-0729](https://github.com/Arkomiko/BlueFaber-Engine/issues/730) |
-| Bukkit | [BFE-0731](https://github.com/Arkomiko/BlueFaber-Engine/issues/732) | [BFE-0732](https://github.com/Arkomiko/BlueFaber-Engine/issues/733) | [BFE-0733](https://github.com/Arkomiko/BlueFaber-Engine/issues/734) | — | [BFE-0711](https://github.com/Arkomiko/BlueFaber-Engine/issues/712) | [BFE-0713](https://github.com/Arkomiko/BlueFaber-Engine/issues/714) |
-| Spigot | [BFE-0734](https://github.com/Arkomiko/BlueFaber-Engine/issues/735) | [BFE-0735](https://github.com/Arkomiko/BlueFaber-Engine/issues/736) | [BFE-0736](https://github.com/Arkomiko/BlueFaber-Engine/issues/737) | [BFE-0712](https://github.com/Arkomiko/BlueFaber-Engine/issues/713) | — | [BFE-0715](https://github.com/Arkomiko/BlueFaber-Engine/issues/716) |
-| Paper | [BFE-0737](https://github.com/Arkomiko/BlueFaber-Engine/issues/738) | [BFE-0738](https://github.com/Arkomiko/BlueFaber-Engine/issues/739) | [BFE-0739](https://github.com/Arkomiko/BlueFaber-Engine/issues/740) | [BFE-0714](https://github.com/Arkomiko/BlueFaber-Engine/issues/715) | [BFE-0716](https://github.com/Arkomiko/BlueFaber-Engine/issues/717) | — |
-
-Переходы между версиями внутри каждой платформы имеют двенадцать отдельных результатов. Одна задача может хранить несколько результатов, как BFE-0755 для CraftBukkit и Spigot. Для каждой стрелки указывается свой исходный JAR, целевой runtime и сравнение поведения.
-
-| Профиль | Старая → новая | Новая → старая |
-| --- | --- | --- |
-| Forge | [BFE-0752](https://github.com/Arkomiko/BlueFaber-Engine/issues/753) | [BFE-0752](https://github.com/Arkomiko/BlueFaber-Engine/issues/753) |
-| NeoForge | [BFE-0754](https://github.com/Arkomiko/BlueFaber-Engine/issues/755) | [BFE-0754](https://github.com/Arkomiko/BlueFaber-Engine/issues/755) |
-| Fabric | [BFE-0595](https://github.com/Arkomiko/BlueFaber-Engine/issues/595) | [BFE-0596](https://github.com/Arkomiko/BlueFaber-Engine/issues/596) |
-| Bukkit (CraftBukkit) | [BFE-0755](https://github.com/Arkomiko/BlueFaber-Engine/issues/756) | [BFE-0755](https://github.com/Arkomiko/BlueFaber-Engine/issues/756) |
-| Spigot | [BFE-0755](https://github.com/Arkomiko/BlueFaber-Engine/issues/756) | [BFE-0755](https://github.com/Arkomiko/BlueFaber-Engine/issues/756) |
-| Paper | [BFE-0601](https://github.com/Arkomiko/BlueFaber-Engine/issues/601) | [BFE-0602](https://github.com/Arkomiko/BlueFaber-Engine/issues/602) |
-
-Комбинации смены версии и платформы получают отдельный прогон. Для нативного выхода отдельно проверяются компиляция, загрузка, выбранный игровой сценарий и данные после перезапуска. Для обычных серверных плагинов отсутствие подходящей возможности отражается в отчёте по конкретному узлу.
-
-### Последовательность профилей
-
-1. **1.21.1, Fabric и Paper.** Для Fabric первым взять ванильный рецепт и одну модель, затем добавить срез [BLUSMOR](BLUSMOR.md) с нативной регистрацией. У Paper отдельно испытать рецепт с ванильными предметами и диагностику собственных блоков и предметов. [Fabric Loom](https://docs.fabricmc.net/develop/loom/), [Paper plugin.yml](https://docs.papermc.io/paper/dev/plugin-yml/).
-2. **1.21.4, Fabric и Paper.** После проверки артефактов первым прогнать на Fabric рецепт и ресурс в обе стороны. Полные профили Fabric и Paper проверяются независимо. Mixin получает отдельную проверку привязки к фактическому байткоду цели. [Первый перенос](PORTING-FIRST.md) · [Версионные руководства NeoForged](https://github.com/neoforged/.github/tree/main/primers).
-3. **Forge, NeoForge, Spigot и CraftBukkit 1.21.1.** Расширить число целей на уже проверенной версии. Для Bukkit использовать публичный API, а совместимость с серверными реализациями подтверждать на реальных экземплярах. Сборку без стороннего слоя совместимости проверять отдельно. [Forge для 1.21.1](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.21.1.html), [NeoForge MDK](https://github.com/neoforged/MDK), [Spigot BuildTools](https://www.spigotmc.org/wiki/buildtools/).
-4. **Границы эпох.** Испытать Fabric/Paper 1.20.4 ↔ 1.20.6 для перехода Java 17/21 и формата предметов, затем 1.21.11 ↔ 26.1 для выхода Minecraft 26.1 без обфускации с Java 25. Ветки 1.12.2 и 1.7.10 для Forge добавлять собственными профилями после проверки источников, legacy-загрузчиков, среды сборки и эталонных JAR. [Переход 1.20.4 → 1.20.5](https://github.com/neoforged/.github/blob/main/primers/1.20.5/index.md), [Minecraft 26.1](https://www.minecraft.net/en-us/article/minecraft-java-edition-26-1), [RetroFuturaGradle](https://github.com/GTNewHorizons/RetroFuturaGradle).
-
-### Что содержит профиль
-
-- Точный идентификатор Minecraft и отдельный порядок версий, тип релиза, загрузчик и его ревизию, версии API и артефакты клиентской и выделенной серверной среды. Хранить версии игры как идентификаторы каталога. Учесть переход Minecraft на календарную нумерацию. [Правила нумерации Mojang](https://www.minecraft.net/en-us/article/minecraft-new-version-numbering-system), [Fabric Meta](https://github.com/FabricMC/fabric-meta).
-- Версии плагинов сборки, wrapper и контрольные суммы, JVM для Gradle, JDK компиляции, уровень языка, целевую версию classfile и JVM запуска игры. Собирать с фиксированным classpath и сверять транзитивные зависимости с целевой Java. Для Spigot/CraftBukkit фиксировать ревизию BuildTools и способ получения тестового сервера. [ForgeGradle](https://github.com/MinecraftForge/ForgeGradle), [ModDevGradle](https://docs.neoforged.net/toolchain/docs/plugins/mdg/), [Spigot BuildTools](https://www.spigotmc.org/wiki/buildtools/).
-- Пространства имён входа, разработки и готового артефакта. Для старых Forge учитывать MCP и SRG, для обфусцированных Fabric — официальный obfuscated, Intermediary и имена разработки Yarn либо Mojang, для NeoForge и Paper — реальные правила выпуска выбранного профиля. Учесть Loom remap для обфусцированных версий, сборку необфусцированных целей и форматы Spigot/NMS. [Mappings Fabric](https://docs.fabricmc.net/develop/porting/mappings/), [Paperweight](https://docs.papermc.io/paper/dev/userdev/).
-- Метаданные своего поколения, включая `mcmod.info`, `mods.toml`, `neoforge.mods.toml`, `fabric.mod.json`, `plugin.yml` или `paper-plugin.yml`. Записывать формат, способ запуска точек входа, метаданные зависимостей и вложенных JAR, стороны и способ обнаружения трансформаций. [Forge](https://docs.minecraftforge.net/en/latest/gettingstarted/modfiles/), [NeoForge](https://docs.neoforged.net/docs/gettingstarted/modfiles/), [Fabric](https://docs.fabricmc.net/develop/loader/), [Paper](https://docs.papermc.io/paper/dev/getting-started/paper-plugins/).
-- Возможности по типу узла, доступным API и стороне исполнения. Одна цель может поддерживать команду, требовать ручной замены для события и блокировать клиентский рендерер. Указать уровень доказательства, дату проверки, хеши входов и параметры запуска для каждого маршрута.
-
-## Правила переноса
-
-1. **Разрешение символов.** Сопоставить владельца, имя, JVM-дескриптор, наследование и объявления в исходном classpath. Разнести remap имени, сопоставление между версиями и изменение семантики. Одинаковые названия в разных версиях сами по себе ничего не подтверждают. Сходство байткода разрешает показать кандидата на ручной выбор. [Mapping-IO](https://github.com/FabricMC/mapping-io), [TinyRemapper](https://github.com/FabricMC/tiny-remapper), [AutoRenamingTool](https://github.com/neoforged/AutoRenamingTool), [Matcher](https://github.com/FabricMC/Matcher).
-2. **Поиск правил.** Правило ограничено исходным и целевым профилями, владельцем, сигнатурой, фазой и стороной. В правиле есть предусловия, изменение промежуточного представления, ожидаемые постусловия, обратимость, комментарий о потере поведения, ссылка на источник и положительные и отрицательные тесты. Порядок правил детерминирован. Приоритет и разрешение конфликта видны в отчёте.
-3. **Проверка возможностей.** Разрешить вывод узла, если известен эквивалент с нужной семантикой. При приближении показать, какое поведение изменится, и дать выбрать адаптер, правку Java или блокировку экспорта. Неоднозначный символ, скрипт coremod, недоступная зависимость и непереносимая функция получают отдельные диагностики. Сохранять исходный фрагмент и координаты в графе, Java и байткоде.
-4. **Сборка.** Сформировать diff, сгенерировать проект для целевой платформы, применить её упаковку, проверить связи классов и затем запустить упакованный JAR. При повторном открытии проекта хранить решения пользователей вместе с версией правила и пересматривать их при смене цели.
-
-| Пример | Условие успеха и действие при несовпадении |
-|---|---|
-| Добыча руды | Сопоставить тип инструмента, минимальный уровень, ключ блока и таблицу выпадения. В игровом тесте каменная и железная кирки дают сырой Blusmor, деревянная кирка и рука оставляют инвентарь без сырья. Для серверного профиля отдельно проверить, можно ли зарегистрировать требуемые идентификаторы на клиенте. [Регистрация, инструмент и теги в Fabric 1.21.1](https://docs.fabricmc.net/1.21.1/develop/blocks/first-block), [Material в Paper 1.21.1](https://jd.papermc.io/paper/1.21.1/org/bukkit/Material.html) |
-| Команда и права | Brigadier и Bukkit-команда могут реализовать один граф с именем, аргументами, разрешением и ошибками. Проверять игрока и консоль, обработку аргументов, алиасы, подсказки и коды результата. Свой Brigadier argument type требует адаптера или ограничения цели. [Mojang Brigadier](https://github.com/Mojang/brigadier), [Paper plugin.yml](https://docs.papermc.io/paper/dev/plugin-yml/) |
-| Данные предметов через границу 1.20.5 | Для известной пары `Damage` ↔ `minecraft:damage` правило проверяет тип и значение, меняет Java-вызовы и целевые данные рецептов или команд. Пользовательские поля различать от стандартных. При обратном переносе компонента без эквивалента предлагать явную реализацию и тест сохраняемых данных. [Mojang 1.20.5](https://www.minecraft.net/en-us/article/minecraft-java-edition-1-20-5) |
-| Регистрация контента | Обобщённый узел с ID, моментом регистрации и ресурсами порождает точку входа выбранного загрузчика. При смене lifecycle проверять порядок и зависимости между регистрациями. Для серверной цели пользовательский предмет на основе ванильного предмета и ресурспака получает отдельный режим с подтверждением потери возможностей. [Forge Registries](https://docs.minecraftforge.net/en/latest/concepts/registries/), [NeoForge Registries](https://docs.neoforged.net/docs/concepts/registries/) |
-| Сеть и хранилище | Сетевые адаптеры должны учитывать фазу входа, сторону, поток, идентификатор, кодек, необходимость клиентского мода и ответ. Перенос NBT, конфигурации, PDC, capabilities, attachments и сохранений реализовывать как самостоятельные операции с отдельными тестами и версиями схем. [NeoForge](https://docs.neoforged.net/docs/networking/), [Mojang DataFixerUpper](https://github.com/Mojang/DataFixerUpper) |
-
-### Пример правила для второй версии
-
-Простой предмет `blusmor:raw_blusmor` на 1.21.1 ссылается на модель `assets/blusmor/models/item/raw_blusmor.json`. Для 1.21.4 добавить определение `assets/blusmor/items/raw_blusmor.json`, сохранив модель и текстуры. Перед генерацией проверить, что новое определение ещё отсутствует, ссылка разрешается, а исходная модель подходит для прямого отображения. [Формат моделей в Minecraft 1.21.4](https://www.minecraft.net/en-us/article/minecraft-java-edition-1-21-4).
-
-```json
-{
-  "model": {
-    "type": "minecraft:model",
-    "model": "blusmor:item/raw_blusmor"
-  }
-}
-```
-
-Для обратного направления свести простое определение к ожидаемому пути модели. Если целевой путь занят другим содержимым, создать явный конфликт вместо перезаписи. Специальный рендерер или выбор модели по нескольким условиям требуют отдельных правил. Проверить изображение в инвентаре и в руке, перезагрузку ресурспака и сохранение ссылок на текстуры в обе стороны.
-
-### Стороны, потоки и класс возможностей
-
-Различать физический клиент, выделенный сервер, логический сервер внутри клиента и ванильный клиент, подключённый к серверу. Узел описывает сторону, требования к фазе регистрации и потоку, ожидаемые отмену и результат, зависимость от ресурсов и видимость последствий для игрока. Изменение приоритета, отмены или переноса на следующий тик требует теста поведения. Сетевой обработчик может исполняться в другом потоке, чем логика мира. [Стороны NeoForge](https://docs.neoforged.net/docs/1.21.3/concepts/sides/), [сеть NeoForge](https://docs.neoforged.net/docs/networking/).
-
-- **Серверные действия с проверяемым эквивалентом.** Сообщения, выдача ванильных предметов, базовые команды, часть событий, правила доступа и серверные задачи.
-- **Платформенные действия.** Capability, attachment, Paper API, пакеты, собственные реестры и хранилища требуют адаптера, подтверждения поведения и объявления возможной дополнительной зависимости.
-- **Клиентские действия.** Собственные экраны, привязки клавиш, шейдеры, рендереры, класс клиентского мода и собственный клиентский протокол требуют установленного клиента с нужной реализацией. Показывать причины блокировки сборки под сервер с ванильными клиентами. Вариант через ресурспак и ванильные механики имеет отдельные критерии эквивалентности.
-
-### Ограничения инфраструктуры
-
-У старого Forge обнаруживать `FMLCorePlugin`, `TweakClass`, LaunchWrapper и Java-трансформеры. У современных профилей учитывать ModLauncher, coremods JavaScript/ASM, плагины загрузчика, service descriptors и то, когда каждый трансформер меняет классы. Сохранять исходные конфиги и байткод, определять порядок применения и явно сообщать, где понадобилась ручная замена. Проверять раннее связывание клиентских и серверных классов отдельно. [Legacy FML](https://github.com/MinecraftForge/FML/blob/master/src/main/java/net/minecraftforge/fml/relauncher/IFMLLoadingPlugin.java), [Forge CoreMods](https://github.com/MinecraftForge/coremods).
-
-Для Bukkit-семейства анализировать порядок `load`/зависимостей, права, lifecycle регистрации и завершения, YAML, планировщик и обработку команд. У Paper отдельно моделировать bootstrap и loader из `paper-plugin.yml`. Плагин на общем Bukkit API проверять на объявленных серверах. Использование CraftBukkit/NMS, рефлексии, приватных пакетов и внутренних полей отмечать для каждой связанной цели. Paper меняет runtime namespace с 1.20.5. Для зависимостей с NMS фиксировать координаты и namespace. При необходимости выбирать вариант сборки с нужными mappings и отдельно проверять рефлексивные обращения. [Paper plugin.yml](https://docs.papermc.io/paper/dev/plugin-yml/), [Paper plugins](https://docs.papermc.io/paper/dev/getting-started/paper-plugins/), [Paperweight](https://docs.papermc.io/paper/dev/userdev/), [Spigot BuildTools](https://www.spigotmc.org/wiki/buildtools/).
-
-Слой совместимости предоставляется при явном выборе. Sinytra Connector, Launchpad и гибридные серверы дают проверяемые альтернативы для некоторых маршрутов. Отдельно публиковать нужные версии среды, результат испытаний и зависимости, которые должны быть установлены для такого выхода. [Connector](https://github.com/Sinytra/Connector), [Launchpad](https://github.com/Sinytra/Launchpad), [Arclight](https://github.com/IzzelAliz/Arclight), [Cardboard](https://github.com/CardboardPowered/cardboard).
-
-## Mixin и трансформации классов
-
-### Что сохраняет импорт
-
-- Ссылки на конфиги из метаданных и манифеста, разделение `mixins`, `client`, `server`, `package`, `required`, `minVersion`, `compatibilityLevel`, priority на уровне набора и класса, `injectors.defaultRequire`, версии Mixin/Extras, refmap и фазу. Для каждого профиля зафиксировать refmap, статический remap Loom или отсутствие remap при допустимом совпадении имён. [Mixin environment](https://github.com/SpongePowered/Mixin/wiki/Introduction-to-Mixins---The-Mixin-Environment), [refmap](https://github.com/SpongePowered/Mixin/wiki/Introduction-to-Mixins---Obfuscation-and-Mixins), [Fabric Loader](https://docs.fabricmc.net/develop/loader/).
-- Цели `@Mixin` как ссылки на типы и строки, полные JVM-дескрипторы, перегрузки, селекторы и `@Desc`, `@Pseudo`, классы из зависимости, `remap=false`, имена/алиасы/префиксы `@Shadow`. Отдельно учитывать `@Accessor`, `@Invoker`, `@Overwrite`, `@Unique`, `@Mutable`, интерфейсы, поля и изменение инициализаторов.
-- Точки `@At`, включая `HEAD`, `RETURN`, `INVOKE`, `FIELD`, `NEW` и пользовательские точки. Сохранять `target`, `ordinal`, `opcode`, `shift`, `by`, `@Slice`, `require`, `expect`, `allow`, группы, приоритет и порядок инъекций. Проверять тип возвращаемого значения и отмену, прокидывание аргументов, локальные переменные, типы операндов и фреймы.
-- Встроенные инъекторы `@Inject`, `@Redirect`, `@ModifyArg`, `@ModifyArgs`, `@ModifyVariable`, `@ModifyConstant`, суррогаты и ограничения внедрения в конструктор. Для MixinExtras учитывать `@WrapOperation`, `@WrapMethod`, `@ModifyExpressionValue`, `@Expression`, `@Local`, `@Share` и семантику вызова оригинала. Проверять возможности той реализации Mixin, которую поставляет загрузчик. [Инъекторы Mixin](https://github.com/SpongePowered/Mixin/wiki/Advanced-Mixin-Usage---Callback-Injectors), [MixinExtras](https://github.com/LlamaLad7/MixinExtras), [особенности Fabric Loader](https://docs.fabricmc.net/develop/loader/).
-- Плагины конфигурации и их условные решения `shouldApplyMixin`, `getMixins`, `preApply`, `postApply`, а также пользовательские селекторы и расширения. Импорт индексирует их без исполнения. Для выбранной цели результат проверяется в изолированном запуске полным загрузчиком с нужным набором модов. [IMixinConfigPlugin](https://github.com/SpongePowered/Mixin/blob/master/src/main/java/org/spongepowered/asm/mixin/extensibility/IMixinConfigPlugin.java).
-
-### Алгоритм переноса и тесты
-
-1. Зафиксировать исходную конфигурацию и точный байткод цели, который получает Mixin в среде исходного профиля. Снимок связывает цель с хешем JAR, загрузчиком, пространством имён, стороной, набором модов, инструкцией и соседними операциями.
-2. Разрешить ссылку в целевом профиле и сопоставить тело метода. При изменении `ordinal` сравнить последовательность вызовов, путь управления, сигнатуру, локальные переменные, стек и контекст выполнения. При нуле или нескольких равноправных совпадениях выдавать блокирующую диагностику и показывать кандидатов.
-3. Проверить тот же результат до и после инъекции, включая отмену, исключения и повторные вызовы. Заменять Mixin публичным событием при совпадении фазы, стороны, точки наблюдения, отмены и данных. Если исходный обработчик должен выполнить код между двумя вызовами, запуск после завершения метода может менять поведение даже при совпадающей сигнатуре.
-4. Собрать конфиги и refmap для целевого профиля и испытать упакованный JAR со включённым аудитом или экспортом трансформированных классов, когда это поддерживается. Принудительно выполнять затронутый сценарий, чтобы загрузился целевой класс. Фикстуры должны покрыть ноль/одно/несколько совпадений, смену локалов, конфликт двух Mixin, `remap=false`, обязательную и необязательную зависимости, загрузку в разных фазах и отсутствие клиентского класса на сервере. [Параметры диагностики Mixin](https://github.com/SpongePowered/Mixin/wiki/Mixin-Java-System-Properties), [Sinytra Adapter](https://github.com/Sinytra/Adapter).
-5. Соседний конвейер ведёт Access Transformers, Access Widener и Class Tweaker. Учитывать `final`, наследование, видимость и транзитивные директивы. Преобразование только тех директив, у которых совпадает результат в обеих средах, подтверждать проверкой класса и зависимостей. Инъекции интерфейсов и расширения enum вести отдельными правилами. [Forge AT](https://docs.minecraftforge.net/en/latest/advanced/accesstransformers/), [Fabric Class Tweakers](https://docs.fabricmc.net/develop/class-tweakers/).
-
-## Доказательство поддержки
-
-1. **Статика.** Проверить форматы метаданных и ресурсов, компиляцию, дескрипторы и classfile, ссылки на отсутствующие классы, точность преобразований и совпадение Mixin-целей. На негативных фикстурах отчёт указывает причину и место.
-2. **Запуск.** Загрузить штатный упакованный артефакт, запустить нужный hook, сохранить логи. Различать dev- и production-артефакты. Прогонять выделенный сервер и клиент там, где это влияет на функцию. Версии, стороны и параметры фиксировать в отчёте. [Fabric Automated Testing](https://docs.fabricmc.net/develop/automatic-testing), [NeoForge Game Tests](https://docs.neoforged.net/docs/1.21.11/misc/gametest/), [MockBukkit](https://github.com/MockBukkit/MockBukkit).
-3. **Поведение.** Сравнить исходный и целевой сценарии по наблюдаемым результатам, включая порядок, число срабатываний, отмену, разрешения, сетевые сообщения и данные после рестарта. На версиях с разными форматами мира использовать отдельные копии, тестовые записи и заявленные правила миграции. Сборка плагина, перенос сохранений и подключение клиента другой версии имеют независимые результаты. [DataFixerUpper](https://github.com/Mojang/DataFixerUpper), [ViaVersion](https://github.com/ViaVersion/ViaVersion).
-4. **Публикация результата.** Для пары платформ и версий перечислить возможности с результатом «проверено», «собирается, сценарий ещё не проверен», «нужен адаптер», «нужна ручная правка» или «цель не поддерживает функцию». Сохранить fixture, хеши, отчёт и тест, который можно запустить заново. Каждое обратное направление проходит те же проверки независимо.
-
-### Набор тестов для выпуска профиля
-
-| Фикстура | Что утверждает проверка |
-|---|---|
-| [Материал Blusmor](BLUSMOR.md) | На модовой цели проверить каменную и, где применимо, глубинную руду, инструмент, сырьё, слиток, хранение и генерацию. После перезапуска размещённые блоки и предметы сохраняют свои ID и количество. Плагин с ванильным клиентом получает диагностику недоступных регистраций |
-| Команда от игрока и консоли | Права и ответы совпадают. Неверный аргумент возвращает осмысленную ошибку. Учитываются алиасы и порядок регистрации |
-| Простой и условный Mixin | Аудит, запуск и сценарий согласуются с выведенным числом инъекций и фазой. Отсутствие опциональной зависимости проверяется отдельно |
-| Классы только клиента | Выделенный сервер не связывает клиентские классы. Экспорт клиентского узла в Bukkit-профиль останавливается с указанием узла |
-| Рецепт, модель и сохранённые поля предмета | Рецепт загружается, модель отображается, данные читаются после сохранения. При обратном переносе неподдерживаемое поле появляется в отчёте |
-| Зависимость с тем же именем и другой сигнатурой | Выбор зависимости основан на координатах, хеше и разрешённых символах. Недостающая перегрузка выдаёт адресный блокер |
+- <a name="матрица-целей"></a>[Матрица целей](ru-RU/PORTING.md#матрица-целей)
+- <a name="задачи-на-каждое-направление"></a>[Задачи на каждое направление](ru-RU/PORTING.md#задачи-на-каждое-направление)
+- <a name="последовательность-профилей"></a>[Последовательность профилей](ru-RU/PORTING.md#последовательность-профилей)
+- <a name="что-содержит-профиль"></a>[Что содержит профиль](ru-RU/PORTING.md#что-содержит-профиль)
+- <a name="правила-переноса"></a>[Правила переноса](ru-RU/PORTING.md#правила-переноса)
+- <a name="пример-правила-для-второй-версии"></a>[Пример правила для второй версии](ru-RU/PORTING.md#пример-правила-для-второй-версии)
+- <a name="стороны-потоки-и-класс-возможностей"></a>[Стороны, потоки и класс возможностей](ru-RU/PORTING.md#стороны-потоки-и-класс-возможностей)
+- <a name="ограничения-инфраструктуры"></a>[Ограничения инфраструктуры](ru-RU/PORTING.md#ограничения-инфраструктуры)
+- <a name="mixin-и-трансформации-классов"></a>[Mixin и трансформации классов](ru-RU/PORTING.md#mixin-и-трансформации-классов)
+- <a name="что-сохраняет-импорт"></a>[Что сохраняет импорт](ru-RU/PORTING.md#что-сохраняет-импорт)
+- <a name="алгоритм-переноса-и-тесты"></a>[Алгоритм переноса и тесты](ru-RU/PORTING.md#алгоритм-переноса-и-тесты)
+- <a name="доказательство-поддержки"></a>[Доказательство поддержки](ru-RU/PORTING.md#доказательство-поддержки)
+- <a name="набор-тестов-для-выпуска-профиля"></a>[Набор тестов для выпуска профиля](ru-RU/PORTING.md#набор-тестов-для-выпуска-профиля)
