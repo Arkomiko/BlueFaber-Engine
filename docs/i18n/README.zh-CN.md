@@ -11,7 +11,7 @@
 
 <p align="center"><strong>面向 Minecraft Java 版模组与服务端插件的可视化节点编辑器</strong></p>
 
-BlueFaber Engine 正在开发中。项目的目标是让你从空白节点图开始创作，也可以导入现有的 JAR 文件，再通过节点编辑逻辑，为支持的游戏版本和平台重新构建项目。
+BlueFaber Engine 正在开发中，主要目标是在不同游戏版本和平台之间移植 Minecraft Java 版的模组与服务端插件。你可以在节点编辑器中打开现有 JAR，也可以从空白节点图或可编辑模板开始创建模组。
 
 <p align="center">Forge · NeoForge · Fabric &nbsp; / &nbsp; Bukkit · Spigot · Paper</p>
 
