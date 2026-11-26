@@ -19,6 +19,32 @@
 | Разные платформы и разные версии одновременно | Поздний этап. Разрешается после прохождения обоих преобразований и отдельного теста именно такой комбинации |
 | Новый граф → мод или плагин | Все цели, для которых есть генератор. Перед сборкой проверяются типы, сторона, поток и наличие адаптера для каждого узла |
 
+### Задачи на каждое направление
+
+Для одной версии Minecraft строка обозначает исходную платформу, столбец — целевую. Здесь перечислены 30 направлений с опорными тестами. Для каждой пары используется существующая общая версия. При заявлении общей поддержки одной демонстрации недостаточно: релизная матрица отдельно фиксирует версию, сторону, выбранную механику и ограничения.
+
+| Исходная цель | Forge | NeoForge | Fabric | Bukkit | Spigot | Paper |
+| --- | --- | --- | --- | --- | --- | --- |
+| Forge | — | [BFE-0699](https://github.com/Arkomiko/BlueFaber-Engine/issues/700) | [BFE-0701](https://github.com/Arkomiko/BlueFaber-Engine/issues/702) | [BFE-0721](https://github.com/Arkomiko/BlueFaber-Engine/issues/722) | [BFE-0722](https://github.com/Arkomiko/BlueFaber-Engine/issues/723) | [BFE-0723](https://github.com/Arkomiko/BlueFaber-Engine/issues/724) |
+| NeoForge | [BFE-0700](https://github.com/Arkomiko/BlueFaber-Engine/issues/701) | — | [BFE-0703](https://github.com/Arkomiko/BlueFaber-Engine/issues/704) | [BFE-0724](https://github.com/Arkomiko/BlueFaber-Engine/issues/725) | [BFE-0725](https://github.com/Arkomiko/BlueFaber-Engine/issues/726) | [BFE-0726](https://github.com/Arkomiko/BlueFaber-Engine/issues/727) |
+| Fabric | [BFE-0702](https://github.com/Arkomiko/BlueFaber-Engine/issues/703) | [BFE-0704](https://github.com/Arkomiko/BlueFaber-Engine/issues/705) | — | [BFE-0727](https://github.com/Arkomiko/BlueFaber-Engine/issues/728) | [BFE-0728](https://github.com/Arkomiko/BlueFaber-Engine/issues/729) | [BFE-0729](https://github.com/Arkomiko/BlueFaber-Engine/issues/730) |
+| Bukkit | [BFE-0731](https://github.com/Arkomiko/BlueFaber-Engine/issues/732) | [BFE-0732](https://github.com/Arkomiko/BlueFaber-Engine/issues/733) | [BFE-0733](https://github.com/Arkomiko/BlueFaber-Engine/issues/734) | — | [BFE-0711](https://github.com/Arkomiko/BlueFaber-Engine/issues/712) | [BFE-0713](https://github.com/Arkomiko/BlueFaber-Engine/issues/714) |
+| Spigot | [BFE-0734](https://github.com/Arkomiko/BlueFaber-Engine/issues/735) | [BFE-0735](https://github.com/Arkomiko/BlueFaber-Engine/issues/736) | [BFE-0736](https://github.com/Arkomiko/BlueFaber-Engine/issues/737) | [BFE-0712](https://github.com/Arkomiko/BlueFaber-Engine/issues/713) | — | [BFE-0715](https://github.com/Arkomiko/BlueFaber-Engine/issues/716) |
+| Paper | [BFE-0737](https://github.com/Arkomiko/BlueFaber-Engine/issues/738) | [BFE-0738](https://github.com/Arkomiko/BlueFaber-Engine/issues/739) | [BFE-0739](https://github.com/Arkomiko/BlueFaber-Engine/issues/740) | [BFE-0714](https://github.com/Arkomiko/BlueFaber-Engine/issues/715) | [BFE-0716](https://github.com/Arkomiko/BlueFaber-Engine/issues/717) | — |
+
+Переходы между версиями внутри каждой платформы имеют двенадцать отдельных результатов. Одна задача может хранить несколько результатов, как BFE-0755 для CraftBukkit и Spigot. Для каждой стрелки указывается свой исходный JAR, целевой runtime и сравнение поведения.
+
+| Профиль | Старая → новая | Новая → старая |
+| --- | --- | --- |
+| Forge | [BFE-0752](https://github.com/Arkomiko/BlueFaber-Engine/issues/753) | [BFE-0752](https://github.com/Arkomiko/BlueFaber-Engine/issues/753) |
+| NeoForge | [BFE-0754](https://github.com/Arkomiko/BlueFaber-Engine/issues/755) | [BFE-0754](https://github.com/Arkomiko/BlueFaber-Engine/issues/755) |
+| Fabric | [BFE-0595](https://github.com/Arkomiko/BlueFaber-Engine/issues/595) | [BFE-0596](https://github.com/Arkomiko/BlueFaber-Engine/issues/596) |
+| Bukkit (CraftBukkit) | [BFE-0755](https://github.com/Arkomiko/BlueFaber-Engine/issues/756) | [BFE-0755](https://github.com/Arkomiko/BlueFaber-Engine/issues/756) |
+| Spigot | [BFE-0755](https://github.com/Arkomiko/BlueFaber-Engine/issues/756) | [BFE-0755](https://github.com/Arkomiko/BlueFaber-Engine/issues/756) |
+| Paper | [BFE-0601](https://github.com/Arkomiko/BlueFaber-Engine/issues/601) | [BFE-0602](https://github.com/Arkomiko/BlueFaber-Engine/issues/602) |
+
+Комбинации смены версии и платформы получают отдельный прогон. Для нативного выхода отдельно проверяются компиляция, загрузка, выбранный игровой сценарий и данные после перезапуска. Для обычных серверных плагинов отсутствие подходящей возможности отражается в отчёте по конкретному узлу.
+
 ### Последовательность профилей
 
 1. **1.21.1, Fabric и Paper.** Для Fabric первым взять ванильный рецепт и одну модель, затем добавить срез [BLUSMOR](BLUSMOR.md) с нативной регистрацией. У Paper отдельно испытать рецепт с ванильными предметами и диагностику собственных блоков и предметов. [Fabric Loom](https://docs.fabricmc.net/develop/loom/), [Paper plugin.yml](https://docs.papermc.io/paper/dev/plugin-yml/).
